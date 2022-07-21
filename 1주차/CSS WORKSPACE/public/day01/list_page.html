@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>목록 페이지 구현</title>
+    <style>
+        .AddNewMenber {
+            border: 0;
+            color: white;
+            border: 0;
+            margin-top: 18px;
+            margin-bottom: 18px;
+            background-color: crimson;
+            border-radius: 5px;
+            text-align: center;
+            box-sizing: border-box;
+            padding: 7px;
+        }
+        .SelectAndDelete{
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.2);
+        }
+        .table_1st{
+            background-color: grey;
+            width: 800px;
+        }
+        .table_1st th{
+            background-color: orange;
+            padding: 10px;
+            text-align: left;
+        }
+        .table_1st td{
+            background-color: white;
+            text-align: left;
+            padding: 10px;
+            vertical-align: top;
+        }
+        .table_2nd{
+            width: 100%;
+        }
+        .table_2nd th{
+            background-color: white;
+            border-top: 1px solid grey;
+        }
+        .table_2nd td{
+            background-color: white;
+            border-top: 1px solid grey;
+        }
+        #comm{
+            width: 300px;
+        }
+        #author{
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <label for="name">이름
+        <input type="text" id="name" name="name"><br>
+        
+        <label for="divition">부서
+        <input type="text" id="divition" name="divition"><br>
+
+        <label for="position">직책
+        <input type="text" id="position" name="position"><br>
+
+        <label for="photo">사진
+        <input type="file" id="photo" name="photo" value="파일 선택"><br>
+    </table>
+    <input class="AddNewMenber" type="submit" name="submit" id="submit" value="새 사원 추가">
+    <div class="SelectAndDelete">
+        <span><input type="button" value="선택 삭제"></span>
+        <span>| 검색:</span>
+        <select name="selectbar" id="selectbar">
+            <option value="이름">이름</option>
+            <option value="부서">부서</option>
+            <option value="직책">직책</option>
+        </select>
+        <input type="text" id="selecttext" name="selecttext">
+    </div>
+    <table class="table_1st" cellspacing="1">
+        <tr>
+            <th><input type="checkbox"></th>
+            <th>번호</th>
+            <th>사진</th>
+            <th>사원명</th>
+            <th>부서</th>
+            <th>직급</th>
+            <th>수정</th>
+            <th>삭제</th>
+        </tr>
+        <tr>
+            <td rowspan="3"><input type="checkbox"></td>
+            <td rowspan="3">1043</td>
+            <td><img src="https://t1.daumcdn.net/cfile/tistory/196F571D4BC32CF633" width="250"></td>
+            <td>홍길동</td>
+            <td>개발</td>
+            <td>대리</td>
+            <td rowspan="3"><input type="button" value="edit"></td>
+            <td rowspan="3"><input type="button" value="delete"></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <table class="table_2nd" cellspacing="0">
+                    <tr>
+                        <th>번호</th>
+                        <th>댓글 내용</th>
+                        <th>작성자</th>
+                        <th>수정</th>
+                        <th>삭제</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>멋진 사진입니다</td>
+                        <td>박문수</td>
+                        <td>수정</td>
+                        <td>삭제</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>좋아요^^퍼가요~</td>
+                        <td>일지매</td>
+                        <td>수정</td>
+                        <td>삭제</td>
+                    </tr>
+                </table>
+            </td> 
+        </tr>
+        <tr>
+            <td colspan="4">
+                <span><label for="comm">댓글</label></span>
+                <span><input type="text" id="comm"></span>
+                <span><label for="author">작성자</label></span>
+                <span><input type="text" id="author"></span>
+                <span><input type="button" value="댓글입력"></span>
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top: 10px">(c)comstudy21.or.kr</div>
+</body>
+</html>
