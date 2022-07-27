@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            text-align: center;
+            background-color: slateblue;
+            color: black;
+        }
+
+        div#puzzle {
+            border: 3px solid black;
+            width: 400px;
+            height: 400px;
+            padding: 0;
+            position: absolute;
+            top: 137px;
+            left: 50%;
+            transform: translateX(-50%);
+
+        }
+
+        div#puzzleNoClick {
+            border: 3px solid black;
+            width: 400px;
+            height: 400px;
+            padding: 0;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 1;
+            position: absolute;
+            top: 137px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10em;
+            font-weight: bold;
+            text-align: center;
+            line-height: 400px;
+        }
+
+        #nextStage {
+            font-size: 1em;
+            background-color: tomato;
+            width: 100px;
+            height: 40px;
+            border: 2px solid orangered;
+            border-radius: 30px;
+            position: absolute;
+            top: 437px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            line-height: 40px;
+            font-weight: bold;
+            z-index: 999;
+            cursor: pointer;
+        }
+
+        #puzzle div.cell {
+            width: 100px;
+            height: 100px;
+            border: 1px solid rgb(44, 44, 44);
+            box-sizing: border-box;
+            float: left;
+            margin: 0;
+            text-align: center;
+            line-height: 100px;
+            font-weight: bold;
+            font-size: 5em;
+            color: black;
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        button {
+            width: 80px;
+            height: 30px;
+            border-radius: 20px;
+            font-weight: bold;
+            background-color: steelblue;
+            cursor: pointer;
+        }
+
+        button:active {
+            width: 80px;
+            height: 30px;
+            border-radius: 20px;
+            font-weight: bold;
+            background-color: darkslategrey;
+            box-shadow: inset -1px 1px black;
+        }
+    </style>
+    <script>
+        class PuzzleGame {
+            constructor() {
+                this.puzzle = null;
+                this.puzzleNoClick = null;
+                this.cells = [];
+                this.cellCnt = 1;
+                this.clickCnt = 1;
+                this.compDiv = [];
+                this.compi = [];
+                this.init();
+            }
+            init() {
+                this.body = document.body;
+                this.body.innerHTML = `<h1>Puzzle</h1><button>replay</button><hr />`;
+                this.puzzle = document.createElement("div");
+                this.puzzle.id = "puzzle";
+                this.puzzleNoClick = document.createElement("div");
+                this.puzzleNoClick.id = "puzzleNoClick";
+                this.puzzleNoClick.innerText = "!";
+                this.puzzleNoClick.style.display = "none";
+                this.body.appendChild(this.puzzle);
+                this.body.appendChild(this.puzzleNoClick);
+                for (var i = 0; i < 16; i++) {
+                    var cell = document.createElement("div");
+                    cell.className = "cell";
+                    cell.innerText = i;
+                    this.puzzle.appendChild(cell);
+                    this.cells.push(cell);
+                }
+                this.cells.forEach(function (item, i) {
+                    let charCode = i % 8 + 65;
+                    item.innerHTML = String.fromCharCode(charCode);
+                });
+                const btn = document.querySelector("button");
+                btn.addEventListener("click", main);
+            }
+            swap(i, j) {
+                let tmpTxt = this.cells[i].innerText;
+                this.cells[i].innerText = this.cells[j].innerText;
+                this.cells[j].innerText = tmpTxt;
+
+            }
+
+            compare(cell) {
+                // 첫번째 클릭 cell.ch와 두번째 클릭 cell.ch 비교
+                // 같으면 남기고 다르면 숨긴다
+                this.compDiv.push(cell);
+                this.compDiv[this.cellCnt - 1].innerText = cell.ch;
+                this.compi.push(cell.ch);
+
+                console.log(this.clickCnt, this.compi);
+                console.log(
+                    `this.compDiv${this.clickCnt - 1}: `, this.compDiv[this.cellCnt - 1]
+                );
+
+                if (this.clickCnt % 2 != 1) {
+                    console.log("compare check");
+                    this.puzzleNoClick.style.display = "block";
+                    if (this.compi[0] != this.compi[1]) {
+                        setTimeout(() => {
+                            this.puzzleNoClick.style.display = "none";
+                            this.compDiv[this.cellCnt - 2].innerText = "";
+                            this.compDiv[this.cellCnt - 3].innerText = "";
+                            this.compi = [];
+                            console.log("ㄲㅂ");
+                        }, 50)
+                        this.clickCnt -= 2;
+                    } else {
+                        this.puzzleNoClick.style.display = "none";
+                        this.compi = [];
+                        // this.clickCnt = 0;
+                        console.log("ㅊㅊ");
+                    }
+                }
+                if (this.clickCnt === 16) {
+                    this.puzzleNoClick.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
+                    this.puzzleNoClick.style.color = "white";
+                    this.puzzleNoClick.style.fontSize = "8em";
+                    this.puzzleNoClick.innerText = "Clear!!"
+                    this.puzzleNoClick.style.display = "block";
+                    setTimeout(() => {
+                        this.nextStage = document.createElement("div");
+                        this.nextStage.id = "nextStage";
+                        this.nextStage.innerText = "nextStage";
+                        this.body.appendChild(this.nextStage);
+                        this.nextStage.addEventListener("click",()=>{
+                            location.href = "./ex05hamburger.html";
+                        })
+                    }, 1000)
+                }
+
+            }
+            start() {
+                for (let i = 0; i < 100; i++) {
+                    let idx1 = Math.abs(Math.floor(Math.random() * 16));
+                    let idx2 = Math.abs(Math.floor(Math.random() * 16));
+                    this.swap(idx1, idx2);
+                }
+                setTimeout(() => {
+                    this.cells.forEach((item, i) => {
+                        item.ch = item.innerText;
+                        // console.log(item.ch);
+                        item.innerHTML = "";
+                        item.addEventListener("click", (e) => {
+                            this.compare(e.currentTarget);
+                            this.clickCnt++;
+                            this.cellCnt++;
+                        });
+                    })
+                }, 1000)
+            }
+        }
+
+        function main() {
+            new PuzzleGame().start();
+        }
+        window.addEventListener("load", main);
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

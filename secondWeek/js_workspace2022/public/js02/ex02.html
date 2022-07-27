@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1" class="personTable">
+    </table>
+
+    <script>
+        // 옛날 방식의 클래스 선언 (생성자 함수)
+        function Saram(name, job) {
+            this.name = name;
+            this.job = job;
+        }
+
+        var saram1 = new Saram("홍길동", "도둑");
+        var saram2 = new Saram("성춘향", "무직");
+        var saram3 = new Saram("이몽룡", "암행어사");
+
+        //console.log(saram1.name, saram1.job);
+        //console.log(saram2['name'], saram2['job']);
+
+        var saramList = [saram1, saram2, saram3];
+        var newList = saramList.map(function(item){
+            return `<tr><td>${item.name}</td><td>${item.job}</td></tr>`;
+        });
+        console.log(newList);
+        document.querySelector("#saramTable").innerHTML = newList;
+    </script>
+​
+</body>
+</html>
