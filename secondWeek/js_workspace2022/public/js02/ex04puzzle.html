@@ -11,6 +11,12 @@
             text-align: center;
             background-color: slateblue;
             color: black;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         div#puzzle {
@@ -22,8 +28,9 @@
             top: 137px;
             left: 50%;
             transform: translateX(-50%);
-
+            z-index: 1;
         }
+
 
         div#puzzleNoClick {
             border: 3px solid black;
@@ -31,7 +38,7 @@
             height: 400px;
             padding: 0;
             background-color: rgba(255, 0, 0, 0.4);
-            z-index: 1;
+            z-index: 998;
             position: absolute;
             top: 137px;
             left: 50%;
@@ -63,17 +70,24 @@
         #puzzle div.cell {
             width: 100px;
             height: 100px;
-            border: 1px solid rgb(44, 44, 44);
+            border: 1px solid rgb(100, 70, 10);
             box-sizing: border-box;
             float: left;
             margin: 0;
             text-align: center;
-            line-height: 100px;
+            line-height: 90px;
             font-weight: bold;
             font-size: 5em;
             color: black;
             background-color: rgba(255, 255, 255, 0.4);
+            /* background-color: rgba(100, 255, 195, 0.4); */
+            pointer-events: auto;
         }
+
+        #puzzle div.cell:active {
+            box-shadow: inset 1px 1px 1px 5px rgba(105, 90, 205, 0.2);
+        }
+
 
         button {
             width: 80px;
@@ -103,17 +117,22 @@
                 this.clickCnt = 1;
                 this.compDiv = [];
                 this.compi = [];
+                this.answer = "";
+
                 this.init();
             }
             init() {
                 this.body = document.body;
-                this.body.innerHTML = `<h1>Puzzle</h1><button>replay</button><hr />`;
+                this.body.innerHTML = `<h1>Pairing Puzzle Game</h1><button>replay</button><hr />`;
+
                 this.puzzle = document.createElement("div");
                 this.puzzle.id = "puzzle";
+
                 this.puzzleNoClick = document.createElement("div");
                 this.puzzleNoClick.id = "puzzleNoClick";
                 this.puzzleNoClick.innerText = "!";
                 this.puzzleNoClick.style.display = "none";
+
                 this.body.appendChild(this.puzzle);
                 this.body.appendChild(this.puzzleNoClick);
                 for (var i = 0; i < 16; i++) {
@@ -134,38 +153,38 @@
                 let tmpTxt = this.cells[i].innerText;
                 this.cells[i].innerText = this.cells[j].innerText;
                 this.cells[j].innerText = tmpTxt;
-
             }
-
             compare(cell) {
                 // 첫번째 클릭 cell.ch와 두번째 클릭 cell.ch 비교
                 // 같으면 남기고 다르면 숨긴다
                 this.compDiv.push(cell);
                 this.compDiv[this.cellCnt - 1].innerText = cell.ch;
+                this.compDiv[this.cellCnt - 1].style.backgroundColor = "rgba(100, 255, 195, 0.4)";
+                this.compDiv[this.cellCnt - 1].style.pointerEvents = "none";
+
                 this.compi.push(cell.ch);
 
-                console.log(this.clickCnt, this.compi);
-                console.log(
-                    `this.compDiv${this.clickCnt - 1}: `, this.compDiv[this.cellCnt - 1]
-                );
+                // console.log(`${cell.itemIndex}번째 아이템`);
 
                 if (this.clickCnt % 2 != 1) {
-                    console.log("compare check");
                     this.puzzleNoClick.style.display = "block";
                     if (this.compi[0] != this.compi[1]) {
                         setTimeout(() => {
                             this.puzzleNoClick.style.display = "none";
                             this.compDiv[this.cellCnt - 2].innerText = "";
                             this.compDiv[this.cellCnt - 3].innerText = "";
+
+                            this.compDiv[this.cellCnt - 2].style.backgroundColor = "rgba(255, 255, 255, 0.4)";
+                            this.compDiv[this.cellCnt - 2].style.pointerEvents = "auto";
+                            this.compDiv[this.cellCnt - 3].style.backgroundColor = "rgba(255, 255, 255, 0.4)";
+                            this.compDiv[this.cellCnt - 3].style.pointerEvents = "auto";
+
                             this.compi = [];
-                            console.log("ㄲㅂ");
-                        }, 50)
+                        }, 500)
                         this.clickCnt -= 2;
                     } else {
                         this.puzzleNoClick.style.display = "none";
                         this.compi = [];
-                        // this.clickCnt = 0;
-                        console.log("ㅊㅊ");
                     }
                 }
                 if (this.clickCnt === 16) {
@@ -179,12 +198,24 @@
                         this.nextStage.id = "nextStage";
                         this.nextStage.innerText = "nextStage";
                         this.body.appendChild(this.nextStage);
-                        this.nextStage.addEventListener("click",()=>{
+                        this.nextStage.addEventListener("click", () => {
                             location.href = "./ex05hamburger.html";
                         })
                     }, 1000)
                 }
-
+            }
+            fucAnswer() {
+                this.cells.forEach((e) => {
+                    this.answer += e.innerText;
+                });
+                this.first = this.answer.substr(0, 4);
+                this.second = this.answer.substr(4, 4);
+                this.third = this.answer.substr(8, 4);
+                this.fourth = this.answer.substr(12, 4);
+                console.log(this.first);
+                console.log(this.second);
+                console.log(this.third);
+                console.log("%c" + this.fourth, "border-bottom: 1px solid black");
             }
             start() {
                 for (let i = 0; i < 100; i++) {
@@ -192,26 +223,26 @@
                     let idx2 = Math.abs(Math.floor(Math.random() * 16));
                     this.swap(idx1, idx2);
                 }
+                this.fucAnswer();
                 setTimeout(() => {
                     this.cells.forEach((item, i) => {
                         item.ch = item.innerText;
-                        // console.log(item.ch);
                         item.innerHTML = "";
+                        // console.dir(item);
                         item.addEventListener("click", (e) => {
                             this.compare(e.currentTarget);
                             this.clickCnt++;
                             this.cellCnt++;
+
                         });
                     })
                 }, 1000)
             }
         }
-
         function main() {
             new PuzzleGame().start();
         }
         window.addEventListener("load", main);
-
     </script>
 </head>
 
