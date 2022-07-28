@@ -24,6 +24,9 @@ let carList = [
 ];
 
 // 라우트(route) 설정
+app.get("/list", (req, res)=>{
+    res.send({carList});
+});
 app.get("/home", (req, res)=>{
     req.app.render('home', {carList}, (err, htmlData)=>{
         if(err) throw err;
@@ -32,6 +35,17 @@ app.get("/home", (req, res)=>{
 });
 
 // ejs 페이지로 forward
+app.post("/insert", (req, res)=>{
+    let carData = {
+        cno : top++, 
+        name : req.body.name, 
+        price : req.body.price, 
+        company : req.body.company, 
+        year : req.body.year
+    };
+    carList.push(carData);
+    res.send({carList});
+});
 app.get("/input", (req, res)=>{
     req.app.render('input', {carList}, (err, htmlData)=>{
         if(err) throw err;

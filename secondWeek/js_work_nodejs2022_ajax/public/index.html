@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            background-color: sienna;
+            font-family: 'Playfair Display', serif;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0 20px 0;
+            border-bottom: 3px solid goldenrod;
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(99deg,
+                    rgba(150, 250, 170, 1) 0%,
+                    rgba(13, 140, 96, 1) 50%,
+                    rgba(70, 122, 5, 1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ready {
+            width: 500px;
+            height: 500px;
+            border: 3px solid goldenrod;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+        }
+
+        .ready .start {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 70px;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            background-color: rgba(70, 122, 5, 1);
+            border: 3px solid rgba(13, 140, 96, 1);
+            border-radius: 30px;
+            color:rgb(255, 255, 255);
+        }
+
+        .container {
+            width: 500px;
+            height: 500px;
+            border: 3px solid goldenrod;
+            background-color: chocolate;
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .container .tile {
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            border: 1px solid gold;
+            box-shadow: inset 0px 0px 0px 2px brown;
+            float: left;
+            z-index: 1;
+        }
+
+        .snakeArea {
+            width: 500px;
+            height: 500px;
+            border: 3px solid goldenrod;
+            /* background-color: rgba(100, 255, 149, 0.6); */
+            background-color: transparent;
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .snakeArea .snakeHead {
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            border: 1px solid gold;
+            background-color: greenyellow;
+            box-shadow: inset 0px 0px 0px 2px rgba(0, 128, 0, 0.5);
+            /* float: left; */
+            position: relative;
+            /* top:220px;
+            left: 240px; */
+            z-index: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Snake Game</h1>
+    <div class="container"></div>
+    <div class="snakeArea">
+        <div class="snakeHead"></div>
+    </div>
+    <div class="ready">
+        <button class="start">Start</button>
+    </div>
+    <script>
+        const container = document.querySelector(".container");
+
+        // 타일 갯수 가로, 세로25개 
+        // 타일 크기 가로, 세로 20px
+        for (let i = 0; i < 625; i++) {
+            container.innerHTML += `<div class='tile'></div>`;
+        }
+
+    </script>
+</body>
+
+</html>
