@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./snake_favicon.png">
+    <title>Snake Game</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            background-color: sienna;
+            font-family: 'Playfair Display', serif;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: rgb(80, 35, 0);
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0 20px 0;
+            border-bottom: 3px solid goldenrod;
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(99deg,
+                    rgba(150, 250, 170, 1) 0%,
+                    rgba(13, 140, 96, 1) 50%,
+                    rgba(70, 122, 5, 1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ready {
+            width: 500px;
+            height: 500px;
+            border: 3px solid goldenrod;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+        }
+
+        .ready .start {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 70px;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            background-color: rgba(70, 122, 5, 1);
+            border: 3px solid rgba(13, 140, 96, 1);
+            border-radius: 30px;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+        }
+
+        .ready .dyingMsg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4em;
+            font-weight: bold;
+            text-align: center;
+            color: black;
+            width: 500px;
+            background-color: yellow;
+            display: none;
+        }
+
+        .container {
+            width: 500px;
+            height: 500px;
+            border: 3px solid goldenrod;
+            background-color: chocolate;
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .container .tile {
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            border: 1px solid rgba(255, 217, 0, 0.4);
+            box-shadow: inset 0px 0px 0px 2px brown;
+            float: left;
+            z-index: 1;
+        }
+
+        .snakeArea {
+            width: 500px;
+            height: 500px;
+            border: 3px solid goldenrod;
+            /* background-color: rgba(100, 255, 149, 0.6); */
+            background-color: transparent;
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .snakeArea .snakeHead {
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            border: 1px solid gold;
+            background-color: greenyellow;
+            box-shadow: inset 0px 0px 0px 2px rgba(0, 128, 0, 0.5);
+            position: absolute;
+            z-index: 6;
+        }
+
+        .snakeArea .snakeBody {
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            border: 1px solid greenyellow;
+            background-color: green;
+            box-shadow: inset 0px 0px 0px 2px rgba(0, 80, 0, 0.6);
+            position: absolute;
+            z-index: 6;
+        }
+
+        .snakeArea .snakeTail {
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            border: 1px solid greenyellow;
+            background-color: green;
+            box-shadow: inset 0px 0px 0px 2px rgba(0, 80, 0, 0.6);
+            position: absolute;
+            z-index: 6;
+        }
+
+        .food {
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            border: 1px solid rgba(100, 100, 100, 0.5);
+            background-color: gray;
+            box-shadow: inset 0px 0px 0px 2px rgba(20, 20, 20, 0.5);
+            position: absolute;
+            z-index: 6;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Snake Game</h1>
+    <div class="container"></div>
+
+    <div class="snakeArea">
+        <div class="snakeHead"></div>
+        <div class="food"></div>
+    </div>
+
+    <div class="ready">
+        <button class="start">Start</button>
+        <div class="dyingMsg">YOU KILLED SNAKE!!</div>
+    </div>
+    <script>
+        const container = document.querySelector(".container");
+        const startBtn = document.querySelector(".start");
+
+        // 뱀게임 클래스
+        class snakeGame {
+            constructor() {
+                this.ready = null;
+                this.snakeHead = null;
+
+                this.snakeTail = null;
+                this.snakeTailLength = 0;
+                this.snakeLength = 1;
+                this.dyingMsg = null;
+                this.food = null;
+                this.top = null;
+                this.left = null;
+                this.currentMove = null;
+                this.init();
+            }
+            //초기화
+            init() {
+                this.snakeArea = document.querySelector(".snakeArea");
+                this.ready = document.querySelector(".ready");
+                this.snakeHead = document.querySelector(".snakeHead");
+                this.dyingMsg = document.querySelector(".dyingMsg");
+                this.food = document.querySelector(".food");
+                this.top = 20;
+                this.left = 20;
+                this.i = 1; //뱀 머리 좌우 인덱스
+                this.j = 1; //뱀 머리 상하 인덱스 
+            }
+            //방향키 클릭 UP
+            upMove() {
+                this.currentMove = "UP"
+                this.j--;
+                this.y = this.top * this.j;
+                this.snakeHead.style.top = this.y + "px";
+            }
+            //방향키 클릭 DOWN
+            downMove() {
+                this.currentMove = "DOWN"
+                this.j++;
+                this.y = this.top * this.j;
+                this.snakeHead.style.top = this.y + "px";
+            }
+            //방향키 클릭 LEFT
+            leftMove() {
+                this.currentMove = "LEFT"
+                this.i--;
+                this.x = this.left * this.i;
+                this.snakeHead.style.left = this.x + "px";
+            }
+            //방향키 클릭 RIGHT
+            rightMove() {
+                this.currentMove = "RIGHT"
+                this.i++;
+                this.x = this.left * this.i;
+                this.snakeHead.style.left = this.x + "px";
+            }
+            // 음식 생성
+            foodInput() {
+                this.foodi = 1; // 음식 좌우 인덱스
+                this.foodj = 1; // 음식 상하 인덱스
+                this.foodi = this.foodi * Math.floor(Math.random() * 25);
+                this.foodj = this.foodj * Math.floor(Math.random() * 25);
+                // console.log(this.foodi,this.foodj);
+                this.food.style.display = "block";
+                this.food.style.left = this.left * this.foodi + "px";
+                this.food.style.top = this.top * this.foodj + "px";
+            }
+            // 종료
+            end() {
+                this.ready.style.display = "block";
+                this.ready.style.backgroundColor = "rgba(200, 0, 0, 0.6)";
+                startBtn.style.display = "none";
+                this.dyingMsg.style.display = "block";
+            }
+            // 꼬리 좌표이동
+            tailLocation(ii, jj) {
+                // console.log(ii, jj);
+                setInterval(()=>{
+                    this.snakeTail.style.top = this.top * this.j + jj + "px";
+                    this.snakeTail.style.left = this.left * this.i + ii + "px";
+                },300)
+            }
+            // 뱀 꼬리 생성
+            snakeTailCreate() {
+
+                if (this.snakeTailLength == 0) {
+                    this.snakeTail = document.createElement("div");
+                    this.snakeTail.className = "snakeTail";
+                    this.snakeArea.appendChild(this.snakeTail);
+                    this.snakeTail = document.querySelector(".snakeTail");
+
+                    if (this.currentMove == "UP") {
+                        this.tailLocation(0, -20);
+                    } else if (this.currentMove == "DOWN") {
+                        this.tailLocation(0, 20);
+                    } else if (this.currentMove == "LEFT") {
+                        this.tailLocation(-20, 0);
+                    } else if (this.currentMove == "RIGHT") {
+                        this.tailLocation(20, 0);
+                    }
+                }
+
+            }
+            // 시작
+            start() {
+                this.ready.style.display = "none";
+                this.snakeHead.style.left = this.left * this.i + "px";
+                let timer = setInterval(() => {
+                    this.rightMove();
+                }, 300);
+                this.foodInput();
+                //키보드 조작
+                document.addEventListener("keyup", (e) => {
+                    //키보드 위 입력
+                    if (e.keyCode == '38') {
+                        clearInterval(timer);
+                        this.upMove();
+                        timer = setInterval(() => {
+                            this.upMove();
+                        }, 300);
+                    }
+                    //키보드 아래 입력
+                    else if (e.keyCode == '40') {
+                        clearInterval(timer);
+                        this.downMove();
+                        timer = setInterval(() => {
+                            this.downMove();
+                        }, 300);
+                    }
+                    //키보드 왼쪽 입력
+                    else if (e.keyCode == '37') {
+                        clearInterval(timer);
+                        this.leftMove();
+                        timer = setInterval(() => {
+                            this.leftMove();
+                        }, 300);
+                    }
+                    //키보드 오른쪽 입력
+                    else if (e.keyCode == '39') {
+                        clearInterval(timer);
+                        this.rightMove();
+                        timer = setInterval(() => {
+                            this.rightMove();
+                        }, 300);
+                    }
+                })
+                //식사 체크
+                let foodChecker = setInterval(() => {
+                    if (this.i == this.foodi && this.j == this.foodj) {
+                        // console.log(this.currentMove);
+                        this.snakeTailCreate();
+                        this.foodInput();
+                    }
+                }, 100)
+                setInterval(() => {
+                    if (this.i < 0 || this.i > 24) {
+                        clearInterval(timer);
+                        this.end();
+                    } else if (this.j < 0 || this.j > 24) {
+                        clearInterval(timer);
+                        this.end();
+                    }
+                }, 300)
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        // 타일 갯수 가로, 세로25개 
+        // 타일 크기 가로, 세로 20px
+        for (let i = 0; i < 625; i++) {
+            container.innerHTML += `<div class='tile'></div>`;
+        }
+
+        function main() {
+            new snakeGame().start();
+        }
+        startBtn.addEventListener("click", main);
+    </script>
+</body>
+
+</html>

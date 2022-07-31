@@ -5,99 +5,94 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        fieldset{
+            width: fit-content;
+        }
+    </style>
 </head>
 <body>
-    <fieldset>
+    <fieldset style="border-radius: 20px;">
         <legend>계산기</legend>
         <form action="">
-            <input type="text" name="num1" id="num1" size="5" value="0"> 
-            <select id="oper">
+            <input type="text" name="num1" id="num1" size="10px" value="">
+            <select id="op" onchange="calFn()">
+                <!-- onchange : select에서 선택 값이 변경 되었을 때 이벤트-->
                 <option value="+">+</option>
                 <option value="-">-</option>
                 <option value="*">*</option>
-                <option value="/">/</option>
-                <option value="%">%</option>
+                <option value="div">/</option>
+                <option value="share">%</option>
             </select>
-            <input type="text" name="num2" id="num2" size="5" value="0">
-            <input type="button" value="확인" id="resultBtn">
-            <div><span id="selOper">+</span>결과 : <span id="resultSapn">0</span></div>
+            <input type="text" name="num2" id="num2" size="10px" value="">
+            <input type="button" id="resultBtn" value="계산" style="background-color: orange;">
+            <br>
+            <span style="background-color: lightgray;">결과 : <span id="result">0</span></span>
         </form>
     </fieldset>
 
     <script>
-        // querySelectorAll - 여러개를 컬렉션 형태로
+        //queryselector - 하나만 선택
+        //queryselectorAll - 여러 개를 컬렉션(배열) 형태로
         let inputList = document.querySelectorAll("input");
         inputList[0].style.backgroundColor = "yellow";
         inputList[1].style.backgroundColor = "skyblue";
-        inputList[2].style.backgroundColor = "orange";
-
-        // querySelector - 하나만 선택 
-        let num1input = document.querySelector("#num1");
-        let num2input = document.querySelector("#num2");
-        let resultBtn = document.querySelector("#resultBtn");
-        let resultSapn = document.querySelector("#resultSapn");
-        let oper = document.querySelector("#oper");
-        let selOper = document.querySelector("#selOper");
-
+        let op = document.querySelector("#op");
         const calcFactory = [];
-        let getAjaxCalc = function(x, y, oper) {
-            // Ajax를 이용해서 서버로 x, y값을 보내고 그 결과를 return.
-            // http://localhost:3000/calc/x/y/plu
+        getAjaxCalc = function(op,x,y){
+            //Ajax를 이용해서 서버로 x,y 값을 보내고 그 결과를 return.
+            //http://localhost:3000/calc/+/x/y
             let xhr = new XMLHttpRequest();
             console.dir(xhr);
-            xhr.onreadystatechange = function() {
-                if(this.status==200 && this.readyState==4){
-                    let resultValue = JSON.parse(this.responseText)['resultValue'];
-                    resultSapn.innerText = resultValue;
-                    console.log(resultSapn.innerText);
+
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4&& this.status == 200){
+                    let resultValue= JSON.parse(this.responseText)['resultValue'];
+                    result.innerText = resultValue;
                 }
+
             }
-            let dataStr = `http://localhost:3000/calc/${x}/${y}/${oper}`;
+            let dataStr = `http://localhost:3000/calc/${op}/${x}/${y}`;
             console.log(dataStr);
             xhr.open("GET", dataStr, true);
             xhr.send();
-            return 0;
+            return x + y;
         }
-        calcFactory['+'] = function(x, y) {
-            return getAjaxCalc(x, y, 'plu');
+        calcFactory['+'] = function(x,y){
+            return getAjaxCalc('+',x,y);
         }
-        calcFactory['-'] = function(x, y) {
-            return getAjaxCalc(x, y, 'min');
+        calcFactory['-'] = function(x,y){
+            return getAjaxCalc('-',x,y);
         }
-        calcFactory['*'] = function(x, y) {
-            return getAjaxCalc(x, y, 'mul');
+        calcFactory['*'] = function(x,y){
+            return getAjaxCalc('*',x,y);
         }
-        calcFactory['/'] = function(x, y) {
-            return getAjaxCalc(x, y, 'div');
+        calcFactory['div'] = function(x,y){
+            return getAjaxCalc("div",x,y);
         }
-        calcFactory['%'] = function(x, y) {
-            return getAjaxCalc(x, y, 'mod');
+        calcFactory['share'] = function(x,y){
+            return getAjaxCalc("share",x,y);
         }
-
-        // 이벤트가 발생하면 num1, num2를 parseInt한다.
-        let calcControl = () => {
-            let num1 = Number(num1input.value);
-            let num2 = Number(num2input.value);
-            let operStr = oper.value;
-            console.log(operStr);
-            //resultSapn.innerText = num1 + num2;
-            let str = num1input.value + operStr + num2input.value;
-            // 문자열을 수식이나 object로 변경한다.
-            console.log(str);
-            selOper.innerText = operStr;
-            //resultSapn.innerText = eval(str); 
-            calcFactory[operStr](num1,num2);
+        //버튼용 inputList[2].onclick = function(){}
+        let calFn = function(){
+            let num1str = document.getElementById("num1");
+            //let num1str = document.querySelector("#num1");
+            let num2str = document.getElementById("num2");
+            let resutl = document.getElementById("result");
+            let num1 = Number(num1str.value);
+            let num2 = Number(num2str.value);
+            let opStr = op.value
+            //1번 방법 : if나 switch를 사용하여 분기
+            //2번 방법 : eval을 사용 
+            //eval() 문자열을 수식이나 object로 변경한다.
+            //let str = num1str.value + opStr + num2str.value;
+            //result.innerText = eval(str);
+            //3번 방법 : 자바스크립트에는 함수 포인터가 있다.
+            result.innerText = calcFactory[opStr](num1,num2);
         }
-        resultBtn.onclick = calcControl;
-        // num1input과 num2input에 keypress이벤트가 발생하면
-        // 실시간으로 결과에 값이 보여지게 한다.
-        num1input.onkeyup = calcControl;
-        num2input.onkeyup = calcControl;
-        oper.onchange = calcControl;
-
-        // oper의 값에 따라 처리 결과가 다르게 구현.
-        
-
+        inputList[1].oninput = calFn;
+        inputList[0].oninput = calFn;
+        //oninput 또는 onkeyup을 사용하면 텍스트에 들어간 값을 감지할 수 있다.
     </script>
 </body>
 </html>

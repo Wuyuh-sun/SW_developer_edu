@@ -19,19 +19,20 @@
         function fn01(a,b,c,d,e,f,g){
             // console.log("fn01 호출");
             for(var i = 0; i<arguments.length; i++){
-                // console.dir(arguments[i]);
+                // console.log(arguments);
             }
         }
 
         var fn02 = (...i)=>{
             // console.log("fn02 호출");
-            // console.dir(i[3]);
+            console.dir(i);
 
             i.forEach((a,b,c,d) => {
                 console.log(a,b,c,d);
             });
         }
         fn01(1,2,3,4,5,6,7);
+        // fn01("asd");
         fn02(1111,2222,3333);
     </script>
 </body>
