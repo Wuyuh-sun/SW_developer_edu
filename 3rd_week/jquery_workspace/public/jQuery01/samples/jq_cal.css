@@ -1,0 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg,
+      rgba(224, 255, 240, 1) 0%,
+      rgba(255, 181, 182, 1) 100%);
+}
+
+.container {
+  width: 420px;
+  height: 600px;
+  border: 5px solid gray;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: lightgrey;
+}
+
+.formula {
+  width: 420px;
+  height: 100px;
+  background-color: skyblue;
+  border: 2px solid rgb(77, 166, 201);
+  border-radius: 5px 5px 0 0;
+  color: gray;
+  font-size: 3em;
+  font-weight: bold;
+  text-align: right;
+  line-height: 110px;
+  padding: 0 20px 0 20px;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  white-space: no-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: none; */
+}
+
+.result {
+  width: 420px;
+  height: 100px;
+  background-color: skyblue;
+  border: 2px solid rgb(77, 166, 201);
+  border-radius: 5px 5px 0 0;
+  color: gray;
+  font-size: 3em;
+  font-weight: bold;
+  text-align: right;
+  line-height: 110px;
+  padding: 0 20px 0 20px;
+  box-sizing: border-box;
+  position: relative;
+  display: none;
+  white-space: no-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: block; */
+}
+
+.btn {
+  width: 105px;
+  height: 100px;
+  float: left;
+  text-align: center;
+  line-height: 100px;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  background-color: lightgrey;
+  font-size: 2em;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.btn:active {
+  filter: brightness(110%);
+  box-shadow: inset 0px 0px 3px 1px gray;
+}
+
+.AC {
+  width: 315px;
+}
+
+.num:nth-child(17) {
+  width: 210px;
+  border-radius: 0 0 0 5px;
+}
+
+.btn:nth-child(19) {
+  border-radius: 0 0 5px 0;
+}
+
+.rightBtn {
+  background-color: darkorange;
+}
