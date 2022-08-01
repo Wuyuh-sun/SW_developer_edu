@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .myComputer,
+        .wasteBasket {
+            width: 300px;
+            height: 500px;
+            display: inline-block;
+            border: 2px solid royalblue;
+            background-color: skyblue;
+            text-align: center;
+            font-weight: bold;
+            margin-right: 10px;
+            box-sizing: border-box;
+        }
+
+        .array {
+            position: absolute;
+            top: 30px;
+            left: 2px;
+            width: 610px;
+            height: 470px;
+            display: flex;
+            flex-direction: column;
+            /* background-color: green; */
+        }
+
+        .game {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 3px solid crimson;
+            /* border-radius: 50%; */
+            background-color: tomato;
+            font-size: 0.7em;
+            font-weight: bold;
+            text-align: center;
+            line-height: 50px;
+            display: inline-block;
+            /* top:0;
+            left:316px; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="myComputer">myComputer</div>
+    <div class="wasteBasket">wasteBasket</div>
+
+    <div class="array">
+    </div>
+
+    <script>
+        const myCom = document.querySelector(".myComputer");
+        const wasteB = document.querySelector(".wasteBasket");
+        const array = document.querySelector(".array");
+        const myComRotate = window.pageXOffset + myCom.getBoundingClientRect().left;
+        const wasteBRotate = window.pageXOffset + wasteB.getBoundingClientRect().left;
+
+        let i = null;
+        for (i = 0; i < 5; i++) {
+            array.innerHTML += `<div class='game'>game${i}</div>`;
+
+        }
+        const gBox = document.querySelectorAll(".game");
+        for (i = 0; i < 5; i++) {
+            gBox[i].style.top = i * 56 + "px";
+            let mouseClick = 0;
+
+            gBox[i].addEventListener("mousedown", (e) => {
+                function mouseHandler(e2) {
+                    boxRotateY = e2.clientY - 30;
+                    boxRotateX = e2.clientX;
+                    e.target.style.top = boxRotateY + "px";
+                    e.target.style.left = boxRotateX + "px";
+                    e.target.style.transform = `translate(-50%,-50%)`;
+                }
+                window.addEventListener("mousemove", mouseHandler);
+                e.target.addEventListener("mouseup", () => {
+                    if(wasteBRotate <= boxRotateX && wasteBRotate + 300 >= boxRotateX){
+                        e.target.style.top = mouseClick*56 + 30 + "px";
+                        e.target.style.left = 350 + "px";
+                        window.removeEventListener("mousemove", mouseHandler);
+                        console.log(e.target)
+                    }else if(boxRotateX < wasteBRotate || boxRotateX > wasteBRotate + 300) {
+                        e.target.style.top = mouseClick*56 + 30 + "px";
+                        e.target.style.left = 28 + "px";
+                        window.removeEventListener("mousemove", mouseHandler);
+                    }
+                    
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>

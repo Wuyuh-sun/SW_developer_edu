@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .box {
+            border: 1px solid red;
+            background-color: yellow;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            left: 0;
+            top: 0;
+            transition: 0.1s linear;
+        }
+        .box2 {
+            border: 1px solid black;
+            background-color: cornflowerblue;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            left: 0;
+            top: 0;
+            transition: 1s linear;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="box">Box</div>
+    <div class="box2">Box2</div>
+
+    <script>
+
+        var box = document.querySelector(".box");
+        var box2 = document.querySelector(".box2");
+
+        const moveBox = (selector) => {
+
+            var x = selector.offsetLeft;
+            var step = 20;
+            var inter = setInterval(() => {
+                x += step;
+                if (x >= 500) {
+                    step *= -1;
+                    selector.style.backgroundColor = "tomato";
+                } else if (x <= 0) {
+                    step *= -1;
+                    selector.style.backgroundColor = "green";
+                }
+                selector.style.left = x + "px";
+            }, 100);
+        }
+        moveBox(box);
+        moveBox(box2);
+    </script>
+</body>
+
+</html>

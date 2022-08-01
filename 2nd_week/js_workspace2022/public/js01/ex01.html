@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js01/ex01</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        h1 {
+            background-color: yellow;
+            color: orange;
+        }
+    </style>
+    <script>
+        // 파일의 내용을 모드 읽으면 실행하는 이벤트 핸들러
+        window.onload = function() {
+            console.log(h3tag);
+            h3tag.style.color = "red";
+        };
+    </script>
+</head>
+<body>
+    <nav>
+        <h1>js01ex01.html 실행</h1>
+    </nav>
+    <div class="container">
+        
+        <h3>자바스크립트 function 구현 실습</h3>
+        <button class="button">확인</button>
+
+        <script>
+            var h3tag = document.getElementsByTagName("h3")[0];
+            var button = document.getElementsByClassName("button");
+            button[0].addEventListener('click', (event)=>{
+                console.dir(event);
+                h3tag.style.backgroundColor = "black";
+                h3tag.style.color = "yellow";
+            });
+        </script>
+    </div>
+</body>
+</html>

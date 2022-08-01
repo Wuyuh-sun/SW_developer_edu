@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="box">box</div>
+    <p class="box">Hello</p>
+    <div class="box">World</div>
+
+    <div class="status">좋아! 좋아!!</div>
+
+    <script>
+        var _$ = function (selector) {
+            var dom = document.querySelectorAll(selector);
+            var obj = {};
+            obj.dom = dom;
+            obj.color = function (color) {
+                for (var i = 0; i < this.dom.length; i++) {
+                    this.dom[i].style.color = color;
+                }
+                return this;
+            }
+            obj.border = function (data) {
+                for (var i = 0; i < this.dom.length; i++) {
+                    this.dom[i].style.border = data;
+                }
+                return this;
+            }
+            obj.size = function (width, height) {
+                for (var i = 0; i < this.dom.length; i++) {
+                    this.dom[i].style.width = width;
+                    this.dom[i].style.height = height;
+                }
+                return this;
+            }
+            obj.moveTo = function (data) {
+                for (var i = 0; i < this.dom.length; i++) {
+                    this.dom[i].style.position = "relative";
+                    this.dom[i].style.left = 0;
+                    this.dom[i].style.transition = "1s";
+                    this.dom[i].addEventListener("click",(e)=>{
+                        e.target.style.left = data.left;
+                    })
+                    
+                }
+                return this;
+            }
+            return obj;
+        };
+
+        _$(".box").color("red").border("5px solid blue");
+        _$(".status").color("orange").border("3px solid red");
+        // 직접 추가해서 구현 해 보세요.
+        // moveTo()는 애니메이션 되도록...
+        _$(".status").size("100px", "100px").moveTo({ 'left': '500px' });
+    </script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">box</div>
+    <p class="box">Hello</p>
+    <div class="box">World</div>
+
+    <div class="status">좋아! 좋아!!</div>
+
+    <script>
+        var _$ = function (selector) {
+            var dom = document.querySelectorAll(selector);
+            var obj = {};
+            obj.dom = dom;
+            obj.color = function(color) {
+                for(var i=0; i<this.dom.length; i++) {
+                    this.dom[i].style.color = color;
+                }
+                return this;
+            }
+            obj.border = function(data) {
+                for(var i=0; i<this.dom.length; i++) {
+                    this.dom[i].style.border = data;
+                }
+                return this;
+            }
+            obj.size = function(args) {
+                obj.loop(function(el) {
+                    el.style.width = args['width'];
+                    el.style.height = args['height'];
+                });
+                return this;
+            }
+            obj.moveTo = function(args, callback) {
+                obj.dom.callback = callback;
+                obj.loop(function(el) {
+                    var target = parseInt(args['left']);
+                    var x = el.offsetLeft;
+                    el.style.position = 'relative';
+                    el.style.transition = 'left .3s';
+                    var interval = setInterval(function() {
+                        console.log(x)
+                        x+=5;
+                        if(x>=target) {
+                            el.style.left = target+'px';
+                            clearInterval(interval);
+                            if(callback) {
+                                obj.dom.callback();
+                            }
+                            
+                        }
+                        el.style.left = x + 'px';
+                    }, 30);
+                });
+                return this;
+            }
+            obj.loop = function(callback) {
+                for(var i=0; i<this.dom.length; i++) {
+                    callback(this.dom[i]);
+                }
+                return this;
+            }
+            return obj;
+        };
+
+        _$(".box").color("red").border("5px solid blue").size({'width':'100px', 'height':'10px'}).moveTo({'left':'500px'});
+        _$(".status").color("orange").border("3px solid red").size({'width':'100px', 'height':'10px'});
+        // 직접 추가해서 구현 해 보세요.
+        // moveTo()는 애니메이션 되도록...
+        _$(".status").size({'width':'100px', 'height':'100px'}).moveTo({'left':'500px'}, function() {
+            this[0].style.backgroundColor = "yellow";
+            console.log(this);
+        });
+    </script>
+</body>
+</html> -->

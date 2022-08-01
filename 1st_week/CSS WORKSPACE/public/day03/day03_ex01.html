@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li {
+            /* border: 1px solid red; */
+            width: 600px;
+            height: 400px;
+            list-style: none;
+            box-sizing: border-box;
+            float: left;
+        }
+        ul {
+            width: 2400px;
+            height: 400px;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            /* transition은 적용 할 속성이 초기화 되어야 한다 */
+            left : 0px;
+            transition: left 0.5s cubic-bezier(.17,.67,.83,.67);
+        }
+        div#box {
+            position: relative;
+            border: 1px solid black;
+            width: 600px;
+            height: 400px;
+            overflow:hidden;
+        }
+        #box > button {
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            position: absolute;
+            top: 180px;
+            z-index: 1;
+        }
+        #rightBtn  {
+            left: 550px;
+        }
+        #box > div.message {
+            position: absolute;
+            top: 180px;
+            left: 260px;
+            display: none;
+            z-index: 999;
+            background-color: aliceblue;
+            padding: 20px;
+            font-weight: bold;
+            font-size: 1.3em;
+            border-radius: 30px;
+            border: 5px solid mediumpurple;
+        }
+        li img{
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <hr>
+    <div id="box">
+        <div class="message"></div>
+        <button id="leftBtn">◁</button>
+        <button id="rightBtn">▷</button>
+        <ul>
+            <li><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTEwMDVfMjkz/MDAxNjMzNDE5NDM5MzY1.C69FSduuaiTt9LkMykKzsMu2YpWQk50LHninjXFSbNcg.yvzNU4LUEaHd-5VKTgzzfkm8kuXikMnE1VFtm4gj7-Ag.JPEG.parkamsterdam/IMG_3467.JPG?type=w800" alt=""></li>
+            <li><img src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/UVBJZL3RXAB36BDSHVM3MW2WNY.jpg" alt=""></li>
+            <li><img src="http://file3.instiz.net/data/file3/2019/10/28/3/9/8/39826ed10940273709ecdef32ac144a3.jpg" alt=""></li>
+            <li><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDD7mtBeY4X75YDTim-5YV1AtjLwDnJL0pUw&usqp=CAU" alt=""></li>
+        </ul>
+    </div>
+
+    <script>
+        let boxUl = document.querySelector("#box>ul");
+        let leftBtn = document.querySelector("#leftBtn");
+        let rightBtn = document.querySelector("#rightBtn");
+        let message = document.querySelector("#box > .message");
+        let x = 0;
+        let idx = 0;
+        let step = -600;
+        leftBtn.addEventListener('click', (e)=>{
+            idx++;
+            if(idx >= 4) {
+                message.innerText = "마지막입니다!";
+                message.style.display = "block";
+                setTimeout(()=>{message.style.display = "none";}, 1000);
+                idx = 4;
+            } else {
+                x = idx * step;
+                boxUl.style.left = x + "px";
+            }
+        }, true);
+        rightBtn.addEventListener('click', (e)=>{
+            idx--;
+            if(idx < 0) {
+                message.innerText = "처음입니다!";
+                message.style.display = "block";
+                setTimeout(()=>{message.style.display = "none";}, 1000)
+                idx = 0;
+            } else {
+                idx = idx>=3 ? 2 : idx;
+                x = idx * step;
+                boxUl.style.left = x + "px";
+            }
+        }, true);
+    </script>
+</body>
+</html>
