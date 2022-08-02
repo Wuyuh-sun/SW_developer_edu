@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Computer Quote & Read</title>
+  <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+  <script src="./bootstrap/jquery.slim.min.js"></script>
+  <script src="./bootstrap/popper.min.js"></script>
+  <script src="./bootstrap/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+  <!-- <button id="data_Add">데이터 추가</button>
+  <button id="data_Read">데이터 보기</button> -->
+
+  <div class="jumbotron">
+    <div class="container">
+      <h1>컴퓨터 견적 시뮬레이터</h1>
+      <div>Made by.</div>
+      <div>경일대학교 - 컴퓨터공학과 - 우윤하</div>
+      <small>Kyungil University - Department of Computer Engineering - Woo yun ha</small>
+      <hr>
+      <div>Use by.</div>
+      <small>HTML, CSS, BootStrap, JavaScript, JQuery</small>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-sm bg-light ">
+    <ul class="navbar-nav container justify-content-start">
+      <li class="nav-item">
+        <a class="nav-link" id="item_input" href="#">견적 입력</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="item_read" href="#">물품 목록</a>
+      </li>
+    </ul>
+  </nav>
+  <br>
+
+  <div class="container" id="item_inputDP">
+    <h2>견적 선택</h2>
+    <form action="#" id="item_inputForm">
+      <div class="form-group">
+        <label for="CPU">CPU</label>
+        <select class="form-control" id="CPU" name="CPU">
+          <option>AMD_5600X</option>
+          <option>AMD_5800X</option>
+          <option>INTEL_12400F</option>
+          <option>INTEL_12700K</option>
+        </select>
+        <br>
+        <label for="BOARD">BOARD</label>
+        <select class="form-control" id="BOARD" name="BOARD">
+          <option>ASUS_TUF_B660M</option>
+          <option>MSI_B550M</option>
+          <option>MSI_PRO_H610M</option>
+          <option>GIGABYTE_B660M</option>
+        </select>
+        <br>
+        <label for="RAM">RAM</label>
+        <select class="form-control" id="RAM" name="RAM">
+          <option>SAMSUNG_DDR5_4800</option>
+          <option>G.SKILL_DDR5_6000</option>
+          <option>TEAMGRUOP_DDR4_3200</option>
+          <option>GEIL_DDR4_3600</option>
+        </select>
+        <br>
+        <label for="GPU">GPU</label>
+        <select class="form-control" id="GPU" name="GPU">
+          <option>RTX3080TI</option>
+          <option>RTX3080</option>
+          <option>RTX3070</option>
+          <option>RTX3060</option>
+        </select>
+        <br>
+        <label for="SSD">SSD</label>
+        <select class="form-control" id="SSD" name="SSD">
+          <option>SAMSUNG_980_NVME</option>
+          <option>SK_HYNIX_GOLD_p31</option>
+          <option>SAMSUNG_870EVO</option>
+          <option>WD_BLUE_SN570</option>
+        </select>
+        <br>
+        <label for="HDD">HDD</label>
+        <select class="form-control" id="HDD" name="HDD">
+          <option>Seagate_2TB</option>
+          <option>WD_2TB</option>
+        </select>
+        <br>
+        <label for="POWER">POWER</label>
+        <select class="form-control" id="POWER" name="POWER">
+          <option>MICRONICS_850W</option>
+          <option>MICRONICS_COOLMAX</option>
+          <option>ASUS_850P</option>
+          <option>EVGA_750</option>
+        </select>
+        <br>
+        <label for="COOLER">COOLER</label>
+        <select class="form-control" id="COOLER" name="COOLER">
+          <option>MSI_C240</option>
+          <option>CNP59X</option>
+          <option>GALAHAD_360</option>
+          <option>NOCTUA</option>
+        </select>
+        <br>
+      </div>
+      <label for="estName">견적 이름</label>
+      <input type="text" placeholder="견적 상자의 이름을 정해주세요." id="estName" name="estName" class="lastInfo">
+      <label for="author">작성자</label>
+      <input type="text" placeholder="견적 상자의 주인 이름을 적어주세요" id="author" name="author" class="lastInfo">
+      <label for="pw">비밀번호</label>
+      <input type="password" placeholder="견적 상자의 비밀번호를 입력해주세요" id="pw" name="pw" class="lastInfo">
+      <button type="submit" class="btn btn-primary" id="formSubmit">Submit</button>
+    </form>
+  </div>
+
+  <div class="container" id="item_readDP">
+    <h2>견적 상자</h2>
+    <div class="row" id="readDP_list">
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-lg-start bg-light text-muted" id="foot">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center p-4 border-bottom">
+      <!-- Left -->
+      <div class="me-5 d-none d-lg-block">
+        <span>- Thank you for watching -</span>
+      </div>
+      <!-- Left -->
+
+      <!-- Right -->
+      <div>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-google"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Links  -->
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+        <!-- Grid row -->
+        <div class="row mt-3">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <!-- Content -->
+            <h6 class="text-uppercase fw-bold mb-4">
+              <i class="fas fa-gem me-3"></i>Company name
+            </h6>
+            <p>
+              Here you can use rows and columns to organize your footer content. Lorem ipsum
+              dolor sit amet, consectetur adipisicing elit.
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">
+              Products
+            </h6>
+            <p>
+              <a href="#!" class="text-reset">Angular</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">React</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">Vue</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">Laravel</a>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">
+              Useful links
+            </h6>
+            <p>
+              <a href="#!" class="text-reset">Pricing</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">Settings</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">Orders</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">Help</a>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+            <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+            <p>
+              <i class="fas fa-envelope me-3"></i>
+              info@example.com
+            </p>
+            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+          </div>
+          <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+      </div>
+    </section>
+    <!-- Section: Links  -->
+
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+      © 2021 Copyright:
+      <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>
