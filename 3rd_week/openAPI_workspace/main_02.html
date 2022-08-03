@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function TestProps(props) {
+            console.log(arguments);
+            console.log(props);
+            return <>
+                <h3>{props.title}</h3>
+                <p>{props.user}</p>
+            </>
+        }
+
+        function MyList(props) {
+            return (<div>
+                <h3>{props.title}</h3>
+                <ul>
+                    {props.list.map((item,i)=>{
+                    return <li key={i}>{item}</li>;
+                    })} 
+                </ul>
+            </div>)
+        }
+        // MyList 콤포넌트를 구현해서 네이버 까페 과제함에 제출.
+        function App() {
+            let name = "홍길동";
+            let fishList = ['오징어','꼴뚜기','대구','명태'];
+            let saramList = ['김길동','이길동','박길동','최길동'];
+            return (<div>
+                <h1>Hello World!</h1>
+                {/* 콤포넌트의 속성은 임의 대로 지어서 사용 */}
+                <TestProps user={name} title="props 연습" />
+                <MyList list={fishList} title="물고기 목록" />
+                <MyList list={saramList} title="사람 목록" />
+            </div>)
+        }
+
+        ReactDOM.render(<App/>, document.getElementById('root'))
+    </script>
+</body>
+</html>

@@ -4,8 +4,8 @@ import {
   collection,
   addDoc,
   getDocs,
-  doc, 
-  deleteDoc
+  doc,
+  deleteDoc,
 } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -150,10 +150,7 @@ async function dataPush() {
     console.error("Error adding document: ", e);
   }
 }
-//데이터 삭제
-$('.deleteForm').on('submit', (e)=>{
-  console.log(e.currentTarget);
-})
+
 //데이터 보기
 
 let itemlistTmp = ``;
@@ -164,19 +161,21 @@ async function dataGet() {
     // console.log(doc);
     // console.log(`${doc.id}`);
     // console.log(`${JSON.stringify(doc.data())}`);
-    console.log(doc.data());
+    // console.log(doc.data());
     itemlistTmp += `
 
       <div class="col-sm-3">
         <div>${doc.data().author}의 ${doc.data().estName}</div>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${
-          doc.data().author
+          doc.id
         }">
           견적 보기
         </button>
 
         <!-- The Modal -->
-        <div class="modal" id="myModal${doc.data().author}">
+        <div class="modal" id="myModal${
+          doc.id
+        }">
           <div class="modal-dialog">
             <div class="modal-content">
               <!-- Modal Header -->
@@ -281,10 +280,16 @@ async function dataGet() {
               </div>
               <!-- Modal footer -->
               <div class="modal-footer">
-                <form action="/" class="deleteForm" id="deleteForm${doc.data().author}">
-                  <label for="delete_pw${doc.data().author}">삭제 비밀번호</label>
-                  <input type="password" id="delete_pw${doc.data().author}">
-                  <button type="submit" class="btn btn-danger deleteBtn" id="deleteSubmit${doc.data().author}">Delete</button>
+                <form action="/" class="deleteForm">
+                  <label for="delete_pw${
+                    doc.data().author
+                  }">삭제 비밀번호</label>
+                  <input type="password" >
+                  <input type="hidden" value="${doc.id}" class="deleteID">
+                  <input type="hidden" value="${
+                    doc.data().pw
+                  }" class="deletePW">
+                  <button type="submit" class="btn btn-danger deleteBtn">Delete</button>
                 </form>
                 <button class="btn btn-dark" data-dismiss="modal">Close</button>
               </div>
@@ -294,7 +299,21 @@ async function dataGet() {
       </div>
 `;
   });
-  $("#readDP_list").append(itemlistTmp); 
+  $("#readDP_list").append(itemlistTmp);
+  $(".deleteForm").on("submit", async (e) => {
+    e.preventDefault();
+    // console.dir(e.currentTarget[0].value);
+    // console.dir(e.currentTarget[2].value);
+    if (e.currentTarget[0].value != e.currentTarget[2].value) {
+      window.alert("비밀번호가 다릅니다.");
+    } else {
+      //데이터 삭제
+      window.alert("삭제성공");
+      await deleteDoc(doc(db, "computer", `${e.currentTarget[1].value}`));
+      location.reload();
+    }
+  });
 }
 
 $(document).ready(dataGet());
+
