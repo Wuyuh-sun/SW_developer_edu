@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.App {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: linear-gradient(0deg,
+      rgba(0, 12, 51, 1) 0%,
+      rgba(32, 78, 207, 1) 100%);
+  animation: background-gradient 20s ease-in-out infinite;
+}
+
+@keyframes background-gradient {
+  0% {
+    background: lightpink;
+  }
+  50% {
+    background: slateblue;
+  }
+  100% {
+    background: lightpink;
+  }
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  height: 800px;
+  border: 15px solid rgba(0, 0, 0);
+  border-radius: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(190, 220, 255);
+}
+h1 {
+  text-align: center;
+}
+
+#form{
+  margin-top:40px;
+  margin-bottom:10px;
+  border: 1px solid black;
+  width:445px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 999;
+}
+#form input{
+  padding:10px;
+}
+#form #submitBtn{
+  width:100%;
+  height:40px
+}
+#form select{
+  padding: 10px;
+}
+
+table{
+  background-color:gray;
+  width: 100%;
+  max-height: 600px;
+  position: relative;
+  top:25px;
+  left: 50%;
+  transform:translate(-50%, 0);
+  z-index: 0;
+}
+th{
+  background-color: rgba(0, 30, 48, 0.705);
+  color: white;
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+td{
+  padding: 10px;
+  text-align: center;
+  background-color: white;
+}
+.react-calendar{
+  /* display: none; */
+  display:fixed;
+  position: absolute;
+  left: 140px;
+  z-index: 10;
+  border: 3px solid black !important;
+  border-radius: 10px;
+}
