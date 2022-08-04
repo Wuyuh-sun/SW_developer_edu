@@ -1,4 +1,8 @@
+import { useDispatch } from "react-redux";
+
 export default function TodoInput() {
+  let dispatch = useDispatch();
+
   return (
     <>
       <div className="inputForm">
@@ -7,9 +11,19 @@ export default function TodoInput() {
           type="text"
           placeholder="할 일을 입력하세요"
         />
-        <input className="todoInputData" type="date" />
+        <input className="todoInputDate" type="date" />
         <p>
-          <button className="inputBtn">글 쓰기</button>
+          <button
+            className="inputBtn"
+            onClick={(e) => {
+              dispatch({
+                type: "update",
+                todo: document.querySelector(".todoInputText").value,
+                date: document.querySelector(".todoInputDate").value});
+            }}
+          >
+            글 쓰기
+          </button>
         </p>
       </div>
     </>
