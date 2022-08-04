@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+h1{
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+.inputForm{
+    text-align: center;
+    padding: 30px;
+}
+
+.list{
+    text-align: center;
+}
+.listOb{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 10px;
+    list-style: none;
+}
