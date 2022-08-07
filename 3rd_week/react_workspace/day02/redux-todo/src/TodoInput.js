@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 
 export default function TodoInput() {
   let dispatch = useDispatch();
-
+  let i = 2;
   return (
     <>
       <div className="inputForm">
@@ -16,8 +16,10 @@ export default function TodoInput() {
           <button
             className="inputBtn"
             onClick={(e) => {
+              i++;
               dispatch({
                 type: "update",
+                no:i,
                 todo: document.querySelector(".todoInputText").value,
                 date: document.querySelector(".todoInputDate").value});
             }}

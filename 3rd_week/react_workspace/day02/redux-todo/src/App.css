@@ -73,6 +73,18 @@ input:focus {
     transform:translate(-50%,-50%);
     overflow: auto;
 }
+.listForm::-webkit-scrollbar{
+    width: 10px; /*스크롤바의 너비*/
+    
+}
+.listForm::-webkit-scrollbar-thumb{
+    background-color: brown; /*스크롤바의 색상*/
+    border-radius: 5px;
+}
+.listForm::-webkit-scrollbar-track{
+    background-color: burlywood; /*스크롤바 트랙 색상*/
+    border-radius: 5px;
+}
 .listEle{
     text-align: left;
     font-size:1.3em;
