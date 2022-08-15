@@ -1,48 +1,41 @@
 import { useState } from "react";
 
-const Auth = ({ onLogin }) => {
+const SignUp = ({ onSignUp }) => {
   const [email, setEmail] = useState("user01@test.com");
   const [password, setPassword] = useState("123456");
   return (
     <>
-      <h3>Auth</h3>
-      <form>
+      <h1>Sign Up</h1>
+      <form action="">
         <input
           type="email"
-          value={email}
+          placeholder="email"
+          required
           onChange={(e) => {
             setEmail(e.currentTarget.value);
           }}
-          placeholder="Email"
-          required
         />
         <br />
         <input
           type="password"
-          value={password}
+          placeholder="password"
+          required
           onChange={(e) => {
             setPassword(e.currentTarget.value);
           }}
-          placeholder="Password"
-          required
         />
-        <hr />
+        <br />
         <input
           type="submit"
+          value="가입"
           onClick={(e) => {
             e.preventDefault();
-            onLogin(email, password);
+            onSignUp(email, password);
           }}
-          value="Log in"
-          class="btn btn-primary"
         />
-
-        <a href="/signup" class="btn btn-secondary">
-          SignUp
-        </a>
       </form>
     </>
   );
 };
 
-export default Auth;
+export default SignUp;

@@ -1,43 +1,55 @@
-import AppRouter from "./Router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { authService, dbService } from "../firebase.conf";
-import { useEffect } from "react";
+import AppRouter from "./Router";
 
 function App() {
-  const [isLoggedIn, setIsLoggendIn] = useState(authService.currentUser);
-  const [carList, setCarList] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(authService.current);
+
   function loginEffect() {
     authService.onAuthStateChanged((user) => {
-      setIsLoggendIn(user);
+      setIsLoggedIn(user);
     });
   }
   useEffect(() => {
     loginEffect();
   }, []);
-  // console.dir(authService);
-  async function onLogIn(email, password) {
-    // console.log(email, password);
-    //비도기 처리된다. async ~ await으로 처리
+  async function onSignUp(email, password) {
+    // console.log(email,password);
+    let data = await authService.createUserWithEmailAndPassword(
+      email,
+      password
+    );
+    // console.log(data);
+    if (data) {
+      setIsLoggedIn(false);
+    }
+  }
+
+  async function onLogin(email, password) {
+    console.log("App.js => ", email, password);
+    // 비동기 처리된다. async ~ await으로 처리
     let data = await authService.signInWithEmailAndPassword(email, password);
     console.log(data);
     if (data) {
-      setIsLoggendIn(true);
+      setIsLoggedIn(true);
     }
   }
-  async function onLogOut() {
+  async function onLogout() {
     let data = await authService.signOut();
     if (null) {
-      setIsLoggendIn(false);
+      setIsLoggedIn(false);
     }
   }
+
   return (
-    <>
+    <div className="container">
       <AppRouter
         isLoggedIn={isLoggedIn}
-        onLogIn={onLogIn}
-        onLogOut={onLogOut}
-      ></AppRouter>
-    </>
+        onLogout={onLogout}
+        onLogin={onLogin}
+        onSignUp={onSignUp}
+      />
+    </div>
   );
 }
 
